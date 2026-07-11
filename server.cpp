@@ -1,8 +1,8 @@
-#include <cstring> 
-#include <cstdio> 
-#include <netinet/in.h> 
-#include <sys/socket.h> 
-#include <unistd.h> 
+#include <cstring>
+#include <cstdio>
+#include <netinet/in.h>
+#include <sys/socket.h>
+#include <unistd.h>
 #include <cstdlib>
 #include <iostream>
 
@@ -17,7 +17,7 @@ $$ |  $$ |\$$\   $$  |$$  __$$\ $$  __$$\ $  |$$  __$$\
  $$  $$<     \$$  /   $$ |      $$ |  $$ |     \____$$\
 $$  /\$$\     $$ |    $$ |  $$\ $$ |  $$ |    $$\   $$ |
 $$ /  $$ |    $$ |    \$$$$$$  | $$$$$$  |    \$$$$$$  |
-\__|  \__|    \__|     \______/  \______/      \______/                                                                   
+\__|  \__|    \__|     \______/  \______/      \______/
  $$$$$$\   $$$$$$\   $$$$$$\  $$\   $$\ $$$$$$$$\ $$$$$$$$\  $$$$$$\
 $$  __$$\ $$  __$$\ $$  __$$\ $$ | $$  |$$  _____|\__$$  __|$$  __$$\
 $$ /  \__|$$ /  $$ |$$ /  \__|$$ |$$  / $$ |         $$ |   $$ /  \__|
@@ -41,7 +41,7 @@ int main(int argc, char** argv){
         exit(EXIT_FAILURE);
     } else {
         printf("[+] Socket created successfully!\n");
-    }    
+    }
 
     // Specify type, port, and address
     sockaddr_in serverAddress;
@@ -99,5 +99,3 @@ int main(int argc, char** argv){
 
     return 0;
 }
-
-// Remember and Outline: sockets need to create a socket, bind the socket, listen to the socket, accept connection request, send/receive data, and close the socket

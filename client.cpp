@@ -18,7 +18,7 @@ int main(int argc, char** argv){
         exit(EXIT_FAILURE);
     } else {
         printf("[+] Socket created successfully!\n");
-    }    
+    }
 
     // Create struct to hold connection/socket data
     sockaddr_in serverAddress;
@@ -65,7 +65,7 @@ int main(int argc, char** argv){
     return 1;
 }
 
-/** Remember: 
+/** Remember:
  * 1. Create socket
  * 2. Create struct to handle connection (socket) data
  * 3. Send connection request to the server (client/server model
