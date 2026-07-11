@@ -1,22 +1,22 @@
-#include <cstring>
-#include <cstdio>
+#include <string>
+#include <iostream>
 #include <netinet/in.h>
 #include <sys/socket.h>
 #include <unistd.h>
 
 int main(int argc, char** argv){
-    printf("Simple sockets in C++!\n ~ Written by Xyco\n");
+    std::cout << "Simple sockets in C++!\n ~ Written by Xyco\n";
 
     // Creating socket
     int clientSock = socket(AF_INET, SOCK_STREAM, 0);
-        printf("[-] Creating socket...\n");
+        std::cout << "[-] Creating socket...\n";
 
         if (clientSock == -1){
-        printf("[!] Error creating socket, likely a socket in TIME_WAIT State.\n Try again in about a minute.\n");
+        std::cout << "[!] Error creating socket, likely a socket in TIME_WAIT State.\n Try again in about a minute.\n";
 
         exit(EXIT_FAILURE);
     } else {
-        printf("[+] Socket created successfully!\n");
+        std::cout << "[+] Socket created successfully!\n";
     }
 
     // Create struct to hold connection/socket data
@@ -27,24 +27,24 @@ int main(int argc, char** argv){
 
     // Send connection request
     int serverConn = connect(clientSock, (struct sockaddr*)&serverAddress, sizeof(serverAddress));
-    printf("[-] Attempting to connect to the server...\n");
+    std::cout << "[-] Attempting to connect to the server...\n";
 
     if (serverConn == -1){
-        printf("[!] Connection request to the server has failed! Please try again!\n");
-        
+        std::cout << "[!] Connection request to the server has failed! Please try again!\n";
+
         close(clientSock);
-        
+
         exit(EXIT_FAILURE);
     } else {
-        printf("[+] Successfully connected to the server!\n");
+        std::cout << "[+] Successfully connected to the server!\n";
     }
 
-    // Send data
-    const char* msg = "Hello, server!";
-    int sendMsg = send(clientSock, msg, strlen(msg), 0);
+    // Send data to server
+    std::string msg = "Hello, server!";
+    int sendMsg = send(clientSock, msg.c_str(), msg.length(), 0);
     if(sendMsg == -1){
-        printf("[!] Unable to send message to the server, please try again.\n");
-        printf("[!] Closing socket...\n");
+        std::cout << "[!] Unable to send message to the server, please try again.\n";
+        std::cout << "[!] Closing socket...\n";
 
         close(clientSock);
 
@@ -54,10 +54,10 @@ int main(int argc, char** argv){
     // Closing socket
     int closeSock = close(clientSock);
     if (closeSock == -1){
-        printf("Unable to close socket... killing program!\n");
+        std::cout << "Unable to close socket... killing program!\n";
         exit(EXIT_FAILURE);
     } else {
-        printf("[+] Socket has been terminated! Thank you for using the client!\n");
+        std::cout << "[+] Socket has been terminated! Thank you for using the client!\n";
         exit(EXIT_SUCCESS);
     }
 
