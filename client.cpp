@@ -1,9 +1,8 @@
-#include <cstring> 
-#include <cstdio> 
-#include <netinet/in.h> 
-#include <sys/socket.h> 
-#include <unistd.h> 
-#include <cstdlib>
+#include <cstring>
+#include <cstdio>
+#include <netinet/in.h>
+#include <sys/socket.h>
+#include <unistd.h>
 
 int main(int argc, char** argv){
     printf("Simple sockets in C++!\n ~ Written by Xyco\n");
