@@ -4,7 +4,7 @@
 #include <sys/socket.h>
 #include <unistd.h>
 
-int main(int argc, char** argv){
+int main(int argc, char** argv) {
     std::cout << "Simple sockets in C++!\n ~ Written by Xyco\n";
 
     // Creating socket
