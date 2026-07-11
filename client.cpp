@@ -8,7 +8,7 @@ int main(int argc, char** argv) {
     std::cout << "Simple sockets in C++!\n ~ Written by Xyco\n";
 
     // Creating socket
-    int clientSock = socket(AF_INET, SOCK_STREAM, 0);
+    int clientSock = socket(AF_INET, SOCK_DGRAM, 0);
         std::cout << "[-] Creating socket...\n";
 
         if (clientSock == -1){
@@ -25,26 +25,12 @@ int main(int argc, char** argv) {
     serverAddress.sin_port = htons(1337);
     serverAddress.sin_addr.s_addr = INADDR_ANY;
 
-    // Send connection request
-    int serverConn = connect(clientSock, (struct sockaddr*)&serverAddress, sizeof(serverAddress));
-    std::cout << "[-] Attempting to connect to the server...\n";
-
-    if (serverConn == -1){
-        std::cout << "[!] Connection request to the server has failed! Please try again!\n";
-
-        close(clientSock);
-
-        exit(EXIT_FAILURE);
-    } else {
-        std::cout << "[+] Successfully connected to the server!\n";
-    }
-
     // Read line of data from user
     std::string msg;
     std::getline(std::cin, msg);
 
     // Send data to server
-    int sendMsg = send(clientSock, msg.c_str(), msg.length(), 0);
+    int sendMsg = sendto(clientSock, msg.c_str(), msg.length(), 0, (struct sockaddr *)&serverAddress, sizeof(serverAddress));
     if(sendMsg == -1){
         std::cout << "[!] Unable to send message to the server, please try again.\n";
         std::cout << "[!] Closing socket...\n";

@@ -30,7 +30,7 @@ int main(int argc, char** argv) {
     std::cout << "Simple sockets in C++!\n ~ Written by Xyco\n\n";
 
     std::cout << "[-] Creating socket...\n";
-    int servSock = socket(AF_INET, SOCK_STREAM, 0);
+    int servSock = socket(AF_INET, SOCK_DGRAM, 0);
     if (servSock == -1){
         std::cout << "[!] Error creating socket, likely a socket in TIME_WAIT State.\n Try again in about a minute.\n";
 
@@ -55,32 +55,15 @@ int main(int argc, char** argv) {
         std::cout << "[+] Socket bound successfully!\n";
     }
 
-    // Listen to the assigned/created socket
-    int listSock = listen(servSock, 5);
-    if (listSock == -1) {
-        std::cout << "[!] Error listening to the created socket. Please try again.\n";
-        exit(EXIT_FAILURE);
-    } else {
-        std::cout << "[+] Listening...\n";
-    }
-
-    // Accept connection request
-    int acceptClientSock = accept(servSock, nullptr, nullptr);
-    if (acceptClientSock == -1) {
-        std::cout << "[!] Unable to accept connection request. Please try again.\n";
-        exit(EXIT_FAILURE);
-    } else {
-        std::cout << "[+] Connection from client has been accepted!\n";
-    }
-
     // Receive data
-    char buffer[2048] = { 0 };
-    int recvData = recv(acceptClientSock, buffer, sizeof(buffer), 0);
+    char buffer[2048];
+    int recvData = recv(servSock, buffer, sizeof(buffer), 0);
     if (recvData == -1) {
         std::cout << "[!] Could not receive data. Please try again.\n";
         exit(EXIT_FAILURE);
     } else {
-        std::cout << "Message from client: %s\n" << buffer;
+        buffer[recvData] = '\0';
+        std::cout << "Message from client: " << buffer << std::endl;
     }
 
     // Closing socket
