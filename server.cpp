@@ -1,11 +1,7 @@
-#include <cstring>
-#include <cstdio>
+#include <string>
 #include <netinet/in.h>
 #include <sys/socket.h>
 #include <unistd.h>
-#include <cstdlib>
-#include <iostream>
-
 #include <iostream>
 
 void welcomeArt() {
@@ -29,18 +25,18 @@ $$\   $$ |$$ |  $$ |$$ |  $$\ $$ |\$$\  $$ |         $$ |   $$\   $$ |
 )" << std::endl;
 }
 
-int main(int argc, char** argv){
+int main(int argc, char** argv) {
     welcomeArt();
-    printf("Simple sockets in C++!\n ~ Written by Xyco\n\n");
+    std::cout << "Simple sockets in C++!\n ~ Written by Xyco\n\n";
 
-    printf("[-] Creating socket...\n");
+    std::cout << "[-] Creating socket...\n";
     int servSock = socket(AF_INET, SOCK_STREAM, 0);
     if (servSock == -1){
-        printf("[!] Error creating socket, likely a socket in TIME_WAIT State.\n Try again in about a minute.\n");
+        std::cout << "[!] Error creating socket, likely a socket in TIME_WAIT State.\n Try again in about a minute.\n";
 
         exit(EXIT_FAILURE);
     } else {
-        printf("[+] Socket created successfully!\n");
+        std::cout << "[+] Socket created successfully!\n";
     }
 
     // Specify type, port, and address
@@ -50,50 +46,50 @@ int main(int argc, char** argv){
         serverAddress.sin_addr.s_addr = INADDR_ANY;
 
     // Bind socket
-    printf("[-] Binding socket...\n");
+    std::cout << "[-] Binding socket...\n";
     if (bind(servSock, (struct sockaddr*)&serverAddress, sizeof(serverAddress)) == -1) {
-        perror("[!] Error binding socket");
+        std::cout << "[!] Error binding socket\n";
         close(servSock);
         exit(EXIT_FAILURE);
     } else {
-        printf("[+] Socket bound successfully!\n");
+        std::cout << "[+] Socket bound successfully!\n";
     }
 
     // Listen to the assigned/created socket
     int listSock = listen(servSock, 5);
     if (listSock == -1) {
-        printf("[!] Error listening to the created socket. Please try again.\n");
+        std::cout << "[!] Error listening to the created socket. Please try again.\n";
         exit(EXIT_FAILURE);
     } else {
-        printf("[+] Listening...\n");
+        std::cout << "[+] Listening...\n";
     }
 
     // Accept connection request
     int acceptClientSock = accept(servSock, nullptr, nullptr);
     if (acceptClientSock == -1) {
-        printf("[!] Unable to accept connection request. Please try again.\n");
+        std::cout << "[!] Unable to accept connection request. Please try again.\n";
         exit(EXIT_FAILURE);
     } else {
-        printf("[+] Connection from client has been accepted!\n");
+        std::cout << "[+] Connection from client has been accepted!\n";
     }
 
     // Receive data
     char buffer[2048] = { 0 };
     int recvData = recv(acceptClientSock, buffer, sizeof(buffer), 0);
     if (recvData == -1) {
-        printf("[!] Could not receive data. Please try again.\n");
+        std::cout << "[!] Could not receive data. Please try again.\n";
         exit(EXIT_FAILURE);
     } else {
-        printf("Message from client: %s\n", buffer);
+        std::cout << "Message from client: %s\n" << buffer;
     }
 
     // Closing socket
     int closeSock = close(servSock);
     if (closeSock == -1){
-        printf("Unable to close socket... killing program!\n");
+        std::cout << "Unable to close socket... killing program!\n";
         exit(EXIT_FAILURE);
     } else {
-        printf("[+] Socket has been terminated! Thank you for using the server!\n");
+        std::cout << "[+] Socket has been terminated! Thank you for using the server!\n";
         exit(EXIT_SUCCESS);
     }
 
